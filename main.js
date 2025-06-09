@@ -13,8 +13,16 @@ const alice1 = document.querySelector("#alice1");
 const alice2 = document.querySelector("#alice2");
 const alice3 = document.querySelector("#alice3");
 
-alice1.animate(aliceTumbling, aliceTiming).onfinish = () => {
-  alice2.animate(aliceTumbling, aliceTiming).onfinish = () => {
-    alice3.animate(aliceTumbling, aliceTiming);
-  };
+animateAlice = (element) => {
+  return new Promise((resolve) => {
+    element.animate(aliceTumbling, aliceTiming).onfinish = resolve;
+  });
 };
+
+async function runAnimations() {
+  await animateAlice(alice1);
+  await animateAlice(alice2);
+  await animateAlice(alice3);
+}
+
+runAnimations();
